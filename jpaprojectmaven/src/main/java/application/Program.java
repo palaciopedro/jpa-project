@@ -1,18 +1,28 @@
 package application;
 
 import domain.Person;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
 public class Program {
 
 	public static void main(String[] args) {
 
-		Person p1 = new Person(1, "Carl", "carl@gmail.com");
-		Person p2 = new Person(1, "John", "john@gmail.com");
-		Person p3 = new Person(1, "Mary", "mary@gmail.com");
+		Person p1 = new Person(null, "Carl", "carl@gmail.com");
+		Person p2 = new Person(null, "John", "john@gmail.com");
+		Person p3 = new Person(null, "Mary", "mary@gmail.com");
 		
-		System.out.println(p1);
-		System.out.println(p2);
-		System.out.println(p3);
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("exemplo-jpa");
+		EntityManager em = emf.createEntityManager();
+
+		em.getTransaction().begin();
+		em.persist(p1);
+		em.persist(p2);
+		em.persist(p3);
+		em.getTransaction().commit();
+		
+		System.out.println("Done!");
 	}
 
 }
