@@ -8,20 +8,17 @@ import jakarta.persistence.Persistence;
 public class Program {
 
 	public static void main(String[] args) {
-
-		Person p1 = new Person(null, "Carl", "carl@gmail.com");
-		Person p2 = new Person(null, "John", "john@gmail.com");
-		Person p3 = new Person(null, "Mary", "mary@gmail.com");
 		
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("exemplo-jpa");
 		EntityManager em = emf.createEntityManager();
-
+		
 		em.getTransaction().begin();
-		em.persist(p1);
-		em.persist(p2);
-		em.persist(p3);
+		Person p = em.find(Person.class, 2);
+		em.remove(p);
 		em.getTransaction().commit();
 		
+		em.close();
+		emf.close();
 		System.out.println("Done!");
 	}
 
